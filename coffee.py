@@ -18,6 +18,11 @@ class Motor(object):
         GPIO.output(self.B, GPIO.LOW)
         GPIO.output(self.E, GPIO.HIGH)
 
+    def backward(self):
+        GPIO.output(self.A, GPIO.LOW)
+        GPIO.output(self.B, GPIO.HIGH)
+        GPIO.output(self.E, GPIO.HIGH)
+
     def stop(self):
         GPIO.output(self.E, GPIO.LOW)
 
