@@ -29,6 +29,7 @@ class MotorController(object):
 class MotorDumb(object):
     def __init__(self, pin):
         self.pin = pin
+        self.setup(self.pin, GPIO.OUT)
 
     def go(self):
         GPIO.output(self.pin, GPIO.HIGH)
@@ -39,11 +40,11 @@ class MotorDumb(object):
 
 GPIO.setmode(GPIO.BOARD)
 
-motor = MotorDumb(24)
+motor = MotorDumb(18)
 
 print("Turning motor on")
 motor.go()
-sleep(2)
+sleep(3)
 
 print("Stopping motor")
 motor.stop()
