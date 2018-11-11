@@ -2,8 +2,7 @@ from RPi import GPIO
 from time import sleep
 
 
-class Motor(object):
-    """docstring for Motor."""
+class MotorController(object):
     def __init__(self, pinA, pinB, pinE):
         self.A = pinA
         self.B = pinB
@@ -27,16 +26,23 @@ class Motor(object):
         GPIO.output(self.E, GPIO.LOW)
 
 
+class MotorDumb(object):
+    def __init__(self, pin):
+        self.pin = pin
+
+    def go(self):
+        GPIO.output(self.pin, GPIO.HIGH)
+
+    def stop(self):
+        GPIO.output(self.pin, GPIO.LOW)
+
+
 GPIO.setmode(GPIO.BOARD)
 
-Motor1A = 16
-Motor1B = 18
-Motor1E = 22
-
-motor = Motor(Motor1A, Motor1B, Motor1E)
+motor = MotorDumb(24)
 
 print("Turning motor on")
-motor.forward()
+motor.go()
 sleep(2)
 
 print("Stopping motor")
