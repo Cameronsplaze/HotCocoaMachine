@@ -30,14 +30,17 @@ fn main() {
     ultrasound.init();
 
     const CUP_DISTANCE_THRESHOLD: f64 = 10.0;
-    const TIME_TO_BREW: Duration = Duration::from_secs(300);
+    const TIME_TO_BREW: Duration = Duration::from_secs(2);
 
     println!("Ready!");
     loop {
         let dist = ultrasound.read_distance();
 
         // Wait for cup to be detected
-        if dist > CUP_DISTANCE_THRESHOLD { continue; }
+        if dist > CUP_DISTANCE_THRESHOLD {
+            thread::sleep(Duration::from_millis(10));
+            continue;
+        }
         println!("Cup detected!");
 
         // Activate the coffee maker
@@ -45,13 +48,14 @@ fn main() {
         motor.forward_time(Duration::from_millis(2000));
 
         thread::sleep(TIME_TO_BREW);
+        println!("That good good is done");
         // Turn off the coffee maker
         motor.backward_time(Duration::from_millis(2000));
 
         // Wait for the cup to be removed
         loop {
             let dist = ultrasound.read_distance();
-            if dist < CUP_DISTANCE_THRESHOLD { break; }
+            if dist > CUP_DISTANCE_THRESHOLD { break; }
 
             thread::sleep(Duration::from_millis(10));
         }
