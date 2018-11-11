@@ -26,18 +26,6 @@ class MotorController(object):
         GPIO.output(self.E, GPIO.LOW)
 
 
-class MotorDumb(object):
-    def __init__(self, pin):
-        self.pin = pin
-        GPIO.setup(self.pin, GPIO.OUT)
-
-    def go(self):
-        GPIO.output(self.pin, GPIO.HIGH)
-
-    def stop(self):
-        GPIO.output(self.pin, GPIO.LOW)
-
-
 def main():
     GPIO.setmode(GPIO.BOARD)
 

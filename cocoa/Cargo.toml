@@ -1,0 +1,8 @@
+[package]
+name = "cocoa"
+version = "0.1.0"
+authors = ["Askaholic <askaholic907@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rppal = "0.8.1"
