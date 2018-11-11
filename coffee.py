@@ -38,15 +38,21 @@ class MotorDumb(object):
         GPIO.output(self.pin, GPIO.LOW)
 
 
-GPIO.setmode(GPIO.BOARD)
+def main():
+    GPIO.setmode(GPIO.BOARD)
 
-motor = MotorDumb(18)
+    try:
 
-print("Turning motor on")
-motor.go()
-sleep(3)
+        motor = MotorDumb(11)
+        print("Turning motor on")
+        motor.go()
+        sleep(3)
 
-print("Stopping motor")
-motor.stop()
+        print("Stopping motor")
+        motor.stop()
+    finally:
+        GPIO.cleanup()
 
-GPIO.cleanup()
+
+if __name__ == '__main__':
+    main()
