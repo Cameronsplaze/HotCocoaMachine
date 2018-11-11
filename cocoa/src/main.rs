@@ -32,6 +32,7 @@ fn main() {
     const CUP_DISTANCE_THRESHOLD: f64 = 10.0;
     const CUP_VERIFICATION_CHECKS: usize = 50;
     const TIME_TO_BREW: Duration = Duration::from_secs(2);
+    const CYCLE_RESET_TIME: Duration = Duration::from_secs(2);
 
     println!("Ready!");
     'main: loop {
@@ -84,6 +85,7 @@ fn main() {
             break;
         }
 
+        thread::sleep(CYCLE_RESET_TIME);
         println!("Waiting for cup...");
     }
 }
