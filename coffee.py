@@ -43,9 +43,9 @@ def main():
 
     try:
 
-        motor = MotorDumb(11)
+        motor = MotorController(16, 18, 22)
         print("Turning motor on")
-        motor.go()
+        motor.forward()
         sleep(3)
 
         print("Stopping motor")
