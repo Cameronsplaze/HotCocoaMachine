@@ -29,7 +29,7 @@ class MotorController(object):
 class MotorDumb(object):
     def __init__(self, pin):
         self.pin = pin
-        self.setup(self.pin, GPIO.OUT)
+        GPIO.setup(self.pin, GPIO.OUT)
 
     def go(self):
         GPIO.output(self.pin, GPIO.HIGH)
