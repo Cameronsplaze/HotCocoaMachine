@@ -30,16 +30,26 @@ fn main() {
     ultrasound.init();
 
     const CUP_DISTANCE_THRESHOLD: f64 = 10.0;
+    const CUP_VERIFICATION_CHECKS: usize = 50;
     const TIME_TO_BREW: Duration = Duration::from_secs(2);
 
     println!("Ready!");
-    loop {
+    'main: loop {
         let dist = ultrasound.read_distance();
 
         // Wait for cup to be detected
         if dist > CUP_DISTANCE_THRESHOLD {
             thread::sleep(Duration::from_millis(10));
             continue;
+        }
+
+        // Verify that the cup is really there
+        for _ in 0..CUP_VERIFICATION_CHECKS {
+            let dist = ultrasound.read_distance();
+            if dist > CUP_DISTANCE_THRESHOLD {
+                thread::sleep(Duration::from_millis(5));
+                continue 'main;
+            }
         }
         println!("Cup detected!");
 
@@ -49,15 +59,29 @@ fn main() {
 
         thread::sleep(TIME_TO_BREW);
         println!("That good good is done");
+
         // Turn off the coffee maker
+        println!("Turning off the coffee maker");
         motor.backward_time(Duration::from_millis(2000));
 
         // Wait for the cup to be removed
-        loop {
+        println!("Waiting for cup to be removed");
+        'rem: loop {
             let dist = ultrasound.read_distance();
-            if dist > CUP_DISTANCE_THRESHOLD { break; }
+            if dist < CUP_DISTANCE_THRESHOLD {
+                thread::sleep(Duration::from_millis(10));
+                continue;
+            }
 
-            thread::sleep(Duration::from_millis(10));
+            // Verify that the cup is really not there anymore
+            for _ in 0..CUP_VERIFICATION_CHECKS {
+                let dist = ultrasound.read_distance();
+                if dist < CUP_DISTANCE_THRESHOLD {
+                    thread::sleep(Duration::from_millis(5));
+                    continue 'rem;
+                }
+            }
+            break;
         }
 
         println!("Waiting for cup...");
