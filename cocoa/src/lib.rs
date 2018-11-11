@@ -15,11 +15,7 @@ pub struct MotorController<'a> {
     gpio: &'a Gpio
 }
 impl<'a> MotorController<'a> {
-    pub fn new(gpio: &'a mut Gpio, a: Pin, b: Pin, enable: Pin) -> MotorController {
-        gpio.set_mode(a, Mode::Output);
-        gpio.set_mode(a, Mode::Output);
-        gpio.set_mode(a, Mode::Output);
-
+    pub fn new(gpio: &'a Gpio, a: Pin, b: Pin, enable: Pin) -> MotorController {
         MotorController {
             a, b, enable, gpio
         }
@@ -40,6 +36,18 @@ impl<'a> MotorController<'a> {
     pub fn stop(&self) {
         self.gpio.write(self.enable, Level::Low);
     }
+
+    pub fn forward_time(&self, duration: Duration) {
+        self.forward();
+        thread::sleep(duration);
+        self.stop();
+    }
+
+    pub fn backward_time(&self, duration: Duration) {
+        self.backward();
+        thread::sleep(duration);
+        self.stop();
+    }
 }
 impl<'a> Drop for MotorController<'a> {
     fn drop(&mut self) {
@@ -50,14 +58,11 @@ impl<'a> Drop for MotorController<'a> {
 pub struct UltrasonicSensor<'a> {
     trigger: Pin,
     echo: Pin,
-    gpio: &'a mut Gpio,
+    gpio: &'a Gpio,
     is_initialized: bool,
 }
 impl<'a> UltrasonicSensor<'a> {
-    pub fn new(gpio: &'a mut Gpio, trigger: Pin, echo: Pin) -> UltrasonicSensor {
-        gpio.set_mode(trigger, Mode::Output);
-        gpio.set_mode(echo, Mode::Input);
-
+    pub fn new(gpio: &'a Gpio, trigger: Pin, echo: Pin) -> UltrasonicSensor {
         UltrasonicSensor { trigger, echo, gpio, is_initialized: false }
     }
 
