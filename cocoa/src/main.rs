@@ -16,11 +16,11 @@ fn main() {
 
     let mut gpio = make_gpio();
 
-    let (motor_a, motor_b, motor_e) = (23, 24, 25);
+    let (motor_a, motor_b, motor_e) = (23, 24, 18);
     gpio.set_mode(motor_a, Mode::Output);
     gpio.set_mode(motor_b, Mode::Output);
     gpio.set_mode(motor_e, Mode::Output);
-    let (sonic_t, sonic_e) = (17, 21);
+    let (sonic_t, sonic_e) = (20, 21);
     gpio.set_mode(sonic_t, Mode::Output);
     gpio.set_mode(sonic_e, Mode::Input);
 
@@ -31,8 +31,8 @@ fn main() {
 
     const CUP_DISTANCE_THRESHOLD: f64 = 10.0;
     const CUP_VERIFICATION_CHECKS: usize = 50;
-    const TIME_TO_BREW: Duration = Duration::from_secs(2);
-    const CYCLE_RESET_TIME: Duration = Duration::from_secs(2);
+    const TIME_TO_BREW: Duration = Duration::from_secs(120);
+    const CYCLE_RESET_TIME: Duration = Duration::from_secs(5);
 
     println!("Ready!");
     'main: loop {
