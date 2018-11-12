@@ -56,14 +56,14 @@ fn main() {
 
         // Activate the coffee maker
         println!("Brewing that good good");
-        motor.forward_time(Duration::from_millis(2000));
+        motor.forward_time(Duration::from_secs(3));
 
         thread::sleep(TIME_TO_BREW);
         println!("That good good is done");
 
         // Turn off the coffee maker
         println!("Turning off the coffee maker");
-        motor.backward_time(Duration::from_millis(2000));
+        motor.backward_time(Duration::from_secs(3));
 
         // Wait for the cup to be removed
         println!("Waiting for cup to be removed");
