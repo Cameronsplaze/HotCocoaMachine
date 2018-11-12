@@ -32,7 +32,7 @@ fn main() {
     const CUP_DISTANCE_THRESHOLD: f64 = 10.0;
     const CUP_VERIFICATION_CHECKS: usize = 50;
     const TIME_TO_BREW: Duration = Duration::from_secs(120);
-    const CYCLE_RESET_TIME: Duration = Duration::from_secs(5);
+    const CYCLE_RESET_TIME: Duration = Duration::from_secs(20);
 
     println!("Ready!");
     'main: loop {
@@ -56,14 +56,14 @@ fn main() {
 
         // Activate the coffee maker
         println!("Brewing that good good");
-        motor.forward_time(Duration::from_secs(3));
+        motor.backward_time(Duration::from_secs(2));
 
         thread::sleep(TIME_TO_BREW);
         println!("That good good is done");
 
         // Turn off the coffee maker
         println!("Turning off the coffee maker");
-        motor.backward_time(Duration::from_secs(3));
+        motor.forward_time(Duration::from_secs(2));
 
         // Wait for the cup to be removed
         println!("Waiting for cup to be removed");
